@@ -24,6 +24,6 @@ public class SearchBookTests extends TestBase {
     @Test
     public void verifyEmptyFieldTest() {
         new BookStorePage(driver).typeInSearchFieldInput("  ");
-        Assert.assertTrue(new BookStorePage(driver).verifyEmptyField().contains(""));
+        Assert.assertTrue(new BookStorePage(driver).verifyEmptyField().contains("pp"));
     }
 }

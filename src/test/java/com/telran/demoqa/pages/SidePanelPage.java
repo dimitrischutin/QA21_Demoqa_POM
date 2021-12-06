@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SidePanelPage extends PageBase{
+public class SidePanelPage extends PageBase {
     public SidePanelPage(WebDriver driver) {
         super(driver);
     }
@@ -14,7 +14,7 @@ public class SidePanelPage extends PageBase{
     WebElement profile;
 
     public ProfilePage selectProfile() {
-        clickWithJSExecutor(profile,0,500);
+        clickWithJSExecutor(profile, 0, 500);
         return new ProfilePage(driver);
     }
 
@@ -22,7 +22,7 @@ public class SidePanelPage extends PageBase{
     WebElement alerts;
 
     public AlertPage selectAlert() {
-        clickWithJSExecutor(alerts,0,300);
+        clickWithJSExecutor(alerts, 0, 300);
         return new AlertPage(driver);
     }
 
@@ -30,7 +30,7 @@ public class SidePanelPage extends PageBase{
     WebElement browserWindows;
 
     public WindowPage selectBrowserWindows() {
-        clickWithJSExecutor(browserWindows,0,300);
+        clickWithJSExecutor(browserWindows, 0, 300);
         return new WindowPage(driver);
     }
 
@@ -38,7 +38,15 @@ public class SidePanelPage extends PageBase{
     WebElement selectMenu;
 
     public SelectMenuPage selectSelectMenu() {
-        clickWithJSExecutor(selectMenu,0,500);
+        clickWithJSExecutor(selectMenu, 0, 700);
         return new SelectMenuPage(driver);
+    }
+
+    @FindBy(xpath = "//span[.='Practice Form']")
+    WebElement practiceForm;
+
+    public FormsPage selectPractiseForm() {
+        clickWithJSExecutor(practiceForm,0,200);
+        return new FormsPage(driver);
     }
 }
