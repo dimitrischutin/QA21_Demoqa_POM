@@ -1,9 +1,11 @@
 package com.telran.demoqa.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 public class FormsPage extends PageBase {
     public FormsPage(WebDriver driver) {
@@ -23,10 +25,10 @@ public class FormsPage extends PageBase {
     WebElement phone;
 
     public FormsPage fillPersonalData(String fName, String lName, String eM, String ph) {
-        type(firstName,fName);
-        type(lastName,lName);
-        type(email,eM);
-        type(phone,ph);
+        type(firstName, fName);
+        type(lastName, lName);
+        type(email, eM);
+        type(phone, ph);
         return this;
     }
 
@@ -40,7 +42,7 @@ public class FormsPage extends PageBase {
     WebElement otherBtn;
 
     public FormsPage selectGender(String gender) {
-        if (gender.equals("Male")){
+        if (gender.equals("Male")) {
             click(maleBtn);
         } else if (gender.equals("Female")) {
             click(femaleBtn);
@@ -55,18 +57,37 @@ public class FormsPage extends PageBase {
 
     public FormsPage typeOfDate(String bDay) {
 
-        clickWithJSExecutor(dateOfBirthBtn,0,200);
+        clickWithJSExecutor(dateOfBirthBtn, 0, 200);
         String os = System.getProperty("os.name");
         System.out.println("OS: " + os);
 
         if (os.startsWith("Mac")) {
-            dateOfBirthBtn.sendKeys(Keys.chord(Keys.COMMAND,"a"));
+            dateOfBirthBtn.sendKeys(Keys.chord(Keys.COMMAND, "a"));
         } else {
-            dateOfBirthBtn.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+            dateOfBirthBtn.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         }
         dateOfBirthBtn.sendKeys(bDay);
         dateOfBirthBtn.sendKeys(Keys.ENTER);
         return this;
+    }
+
+    @FindBy(css = ".react-datepicker__month-select")
+    WebElement month;
+
+    @FindBy(css = ".react-datepicker__year-select")
+    WebElement year;
+
+    public FormsPage chooseDate(String m, String ye, String day) {
+        clickWithJSExecutor(dateOfBirthBtn, 0, 200);
+
+        Select select = new Select(month);//HTML <select> tag
+        select.selectByVisibleText(m);
+
+        Select select1 = new Select(year);
+        select1.selectByVisibleText(ye);
+
+        driver.findElement(By.xpath("//div[@class='react-datepicker__week']//div[.='" + day + "']")).click();
+        return  this;
     }
 
     @FindBy(id = "subjectsInput")
@@ -78,7 +99,7 @@ public class FormsPage extends PageBase {
     public FormsPage addSubject(String[] subjects) {
         for (int i = 0; i < subjects.length; i++) {
             if (subjects[i] != null) {
-                type(subjectsInput,subjects[i]);
+                type(subjectsInput, subjects[i]);
                 selectInput.click();
             }
         }
@@ -96,7 +117,7 @@ public class FormsPage extends PageBase {
 
     public FormsPage chooseHobbies(String[] hobbies) {
         for (int i = 0; i < hobbies.length; i++) {
-            if (hobbies[i].equals("Sports")){
+            if (hobbies[i].equals("Sports")) {
                 click(sports);
             }
             if (hobbies[i].equals("Reading")) {
@@ -115,6 +136,64 @@ public class FormsPage extends PageBase {
     public FormsPage uploadFile(String path) {
         chooseFile.sendKeys(path);
         pause(1000);
+        return this;
+    }
+
+    @FindBy(id = "currentAddress")
+    WebElement add;
+
+    public FormsPage typeAddress(String address) {
+        typeWithJSExecutor(add, 0, 300, address);
+        return this;
+    }
+
+    @FindBy(id = "state")
+    WebElement state;
+
+    @FindBy(id = "react-select-3-input")
+    WebElement selectState;
+
+    public FormsPage inputState(String st) {
+        clickWithJSExecutor(state, 0, 300);
+        selectState.sendKeys(st);
+        selectState.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    @FindBy(id = "city")
+    WebElement city;
+
+    @FindBy(id = "react-select-4-input")
+    WebElement selectCity;
+
+    public FormsPage inputCity(String c) {
+        click(city);
+        selectCity.sendKeys(c);
+        selectCity.sendKeys(Keys.ENTER);
+        return this;
+    }
+
+    @FindBy(id = "submit")
+    WebElement submit;
+
+    public FormsPage clickOnSubmitButton() {
+        click(submit);
+        return this;
+    }
+
+    @FindBy(id = "example-modal-sizes-title-lg")
+    WebElement modalTitle;
+
+    @FindBy(id = "closeLargeModal")
+    WebElement closeBtn;
+
+    public String getTitleFormDialog() {
+        return modalTitle.getText();
+    }
+
+    public FormsPage closeSuccessDialog() {
+        closeBanner();
+        clickWithJSExecutor(closeBtn,0,300);
         return this;
     }
 }
