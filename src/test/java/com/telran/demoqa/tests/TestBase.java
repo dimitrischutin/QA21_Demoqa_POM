@@ -2,7 +2,6 @@ package com.telran.demoqa.tests;
 
 import com.telran.demoqa.helpers.MyListener;
 import com.telran.demoqa.pages.PageBase;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
@@ -44,13 +43,11 @@ public class TestBase {
 
     @AfterMethod
     public void stopTest(ITestResult result) {
-        if(result.isSuccess()){
+        if (result.isSuccess()) {
             logger.info("PASSED: test method " + result.getMethod().getMethodName());
-        }else{
+        } else {
             logger.error("FAILED: test method " + result.getMethod().getMethodName());
-            String screen = "screenshots/screen-" + (System.currentTimeMillis() / 1000 % 3600) + ".png";
-             new PageBase(driver).takeScreenshot();
-             logger.error(screen);
+            new PageBase(driver).takeScreenshot();
         }
         logger.info("==========================");
     }

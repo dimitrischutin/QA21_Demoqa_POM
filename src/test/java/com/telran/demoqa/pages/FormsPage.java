@@ -1,15 +1,16 @@
 package com.telran.demoqa.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 
 public class FormsPage extends PageBase {
+    JavascriptExecutor js;
+
     public FormsPage(WebDriver driver) {
+
         super(driver);
+        js = (JavascriptExecutor) driver;
     }
 
     @FindBy(id = "firstName")
@@ -194,6 +195,41 @@ public class FormsPage extends PageBase {
     public FormsPage closeSuccessDialog() {
         closeBanner();
         clickWithJSExecutor(closeBtn,0,300);
+        return this;
+    }
+
+    public FormsPage checkBoxJS() {
+        //to handle checkbox
+        js.executeScript("document.getElementById('hobbies-checkbox-1').checked=false;");
+        js.executeScript("document.getElementById('hobbies-checkbox-1').checked=true;");
+
+        return this;
+    }
+
+    public FormsPage alertWithJS() {
+        //to generate Alert Pop window
+        js.executeScript("alert('hello world');");
+     //   js.executeScript("window.confirm=function(){}");
+        return this;
+    }
+
+    public FormsPage refreshBrowserJS() {
+        //refresh browser window using JSE
+        js.executeScript("history.go(0)");
+        return this;
+    }
+
+    public FormsPage getTitlePageWithJS() {
+        //to get the Title of our page
+        pause(2000);
+        String text = js.executeScript("return document.title;").toString();
+        System.out.println("********************" + "\n" + text);
+        return this;
+    }
+
+    public FormsPage getUrlWithJS() {
+        String text = js.executeScript("return document.URL;").toString();
+        System.out.println("URL -> " + text);
         return this;
     }
 }
