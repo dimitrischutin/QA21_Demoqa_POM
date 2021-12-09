@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-public class BrokenLinksImagesPage extends PageBase{
+public class BrokenLinksImagesPage extends PageBase {
     public BrokenLinksImagesPage(WebDriver driver) {
         super(driver);
     }
@@ -21,7 +21,7 @@ public class BrokenLinksImagesPage extends PageBase{
     public BrokenLinksImagesPage checkAllUrl() {
         String url = "";
         System.out.println("Total links on the web page: " + allLinks.size());
-
+        //We will iterate through the list and will check the elements in the list.
         Iterator<WebElement> iterator = allLinks.iterator();
         while (iterator.hasNext()) {
             url = iterator.next().getText();
@@ -43,6 +43,7 @@ public class BrokenLinksImagesPage extends PageBase{
     private void verifyLinks(String linkUrl) {
         try {
             URL url = new URL(linkUrl);
+            //Now we will be creating url connection and getting the response code
             HttpURLConnection httpURL = (HttpURLConnection) url.openConnection();
             httpURL.setConnectTimeout(5000);
             httpURL.connect();
@@ -74,11 +75,11 @@ public class BrokenLinksImagesPage extends PageBase{
                 if (imageDisplayed) {
                     System.out.println("DISPLAY - OK");
                     System.out.println("***********************************");
-                }else {
+                } else {
                     System.out.println("DISPLAY - BROKEN");
                     System.out.println("***********************************");
                 }
-            }catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("ERROR");
             }
         }
